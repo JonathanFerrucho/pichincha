@@ -1,0 +1,6 @@
+{
+    "Name": "#{elb-tg}#",
+    "Port": 80,
+    "Protocol": "HTTP",
+    "VpcId": "#{elb-vpcId}#"
+}

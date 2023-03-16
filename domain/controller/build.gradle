@@ -1,0 +1,5 @@
+dependencies {
+    implementation project(':domain-aif')
+
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-webflux', version: '2.7.0'
+}

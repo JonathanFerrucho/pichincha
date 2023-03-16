@@ -1,0 +1,140 @@
+{
+    "family": "#{task}#",
+    "executionRoleArn": "#{executionRole}#",
+    "taskRoleArn":"#{taskRole}#",
+    "networkMode": "awsvpc",
+    "containerDefinitions": [
+        {
+            "environment": [
+                {
+                    "name": "SERVER_PORT",
+                    "value": "#{serverPort}#"
+                },
+                {
+                    "name": "SPRING_APPLICATION_NAME",
+                    "value": "#{springApplicationName}#"
+                },
+                {
+                    "name": "API_VERSION",
+                    "value": "#{apiVersion}#"
+                },
+                {
+                    "name": "REGION_STATIC",
+                    "value": "#{regionStatic}#"
+                },
+                {
+                    "name": "FIXED_RATE",
+                    "value": "#{fixedRate}#"
+                },
+                {
+                    "name": "DYNAMO_ACCESS_KEY_ID",
+                    "value": "#{dynamoAccessKeyId}#"
+                },
+                {
+                    "name": "DYNAMO_SECRET_KEY",
+                    "value": "#{dynamoSecretKey}#"
+                },
+                {
+                    "name": "CONFIGURATION_TABLE_NAME",
+                    "value": "#{configurationTableName}#"
+                },
+                {
+                    "name": "DATE_ID",
+                    "value": "#{dateId}#"
+                },
+                {
+                    "name": "INTEGRATION_NAME",
+                    "value": "#{integrationName}#"
+                },
+                {
+                    "name": "DOMAIN_NAME",
+                    "value": "#{domainName}#"
+                },
+                {
+                    "name": "COMPLETAR_DISCUSION_ACCESS_KEY_ID",
+                    "value": "#{completarDiscusionAccessKey}#"
+                }, {
+                    "name": "COMPLETAR_DISCUSION_SECRET_KEY",
+                    "value": "#{completarDiscusionSecretKey}#"
+                },{
+                    "name": "COMPLETAR_DISCUSION_ENDPOINT",
+                    "value": "#{completarDiscusionEndpoint}#"
+                },{
+                    "name": "COMPLETAR_DISCUSION_GROUP_ID",
+                    "value": "#{completarDiscusionGroupId}#"
+                },
+                {
+                    "name": "TRACEABILITY_ACCESS_KEY_ID",
+                    "value": "#{traceabilityAccessKeyId}#"
+                },
+                {
+                    "name": "TRACEABILITY_SECRET_KEY",
+                    "value": "#{traceabilitySecretKey}#"
+                },
+                {
+                    "name": "TRACEABILITY_ENDPOINT",
+                    "value": "#{traceabilityEndpoint}#"
+                },
+                {
+                    "name": "TRACEABILITY_GROUP_ID",
+                    "value": "#{traceabilityGroupId}#"
+                },
+                {
+                    "name": "OCTOPIA_BASE_URL",
+                    "value": "#{octopiaBaseUrl}#"
+                },
+                {
+                    "name": "OCTOPIA_PAGE_INDEX_PARAM",
+                    "value": "#{octopiaPageIndexParam}#"
+                },
+                {
+                    "name": "OCTOPIA_PAGE_SIZE_PARAM",
+                    "value": "#{octopiaPageSizeParam}#"
+                },
+                {
+                    "name": "OCTOPIA_MIN_DATE_PARAM",
+                    "value": "#{octopiaMinDateParam}#"
+                },
+                {
+                    "name": "OCTOPIA_MAX_DATE_PARAM",
+                    "value": "#{octopiaMaxDateParam}#"
+                },
+                {
+                    "name": "OCTOPIA_IS_OPEN_PARAM",
+                    "value": "#{octopiaIsOpenParam}#"
+                },
+                {
+                    "name": "OCTOPIA_RETRIEVE_TOKEN",
+                    "value": "#{octopiaRetrieveToken}#"
+                }
+            ],
+            "name": "#{container}#",
+            "image": "#{ecr}#/#{stage}#-#{Build.DefinitionName}#:#{Build.BuildNumber}#",
+            "repositoryCredentials": {
+                "credentialsParameter": "#{arnSecret}#"
+            },
+            "cpu": 0,
+            "portMappings": [
+                {
+                    "containerPort": 80,
+                    "hostPort": 80,
+                    "protocol": "tcp"
+                }
+            ],
+            "essential": true,
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "#{logsGroup}#",
+                    "awslogs-region": "#{region}#",
+                    "awslogs-stream-prefix": "web"
+                }
+            }
+        }
+    ],
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "#{cpu}#",
+    "memory": "#{memory}#"
+}

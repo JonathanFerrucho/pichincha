@@ -1,0 +1,21 @@
+apply plugin: 'org.springframework.boot'
+
+dependencies {
+    implementation project(":domain-controller")
+    implementation project(":domain-aif")
+
+    implementation project(":adapters-postgres-adapter")
+    implementation project(":receivers-reactive-web")
+
+    implementation 'com.h2database:h2'
+
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-webflux', version: '2.7.0'
+
+    test {
+        useJUnitPlatform()
+    }
+
+    jar {
+        enabled = false
+    }
+}

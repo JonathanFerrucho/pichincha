@@ -1,0 +1,330 @@
+{
+	"info": {
+		"_postman_id": "179c8c41-3f90-4779-8c38-f2e871a45bdc",
+		"name": "pichincha",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7589889"
+	},
+	"item": [
+		{
+			"name": "Persona",
+			"item": [
+				{
+					"name": "Crear Persona",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Camilo\",\r\n    \"genero\": \"Masculino\",\r\n    \"fechaNacimiento\": \"1996-04-03\",\r\n    \"identificacion\": \"123456\",\r\n    \"direccion\": \"CARR 1 n 2-3\",\r\n    \"telefono\": \"1234490348230\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/persona/crearPersona",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"persona",
+								"crearPersona"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/persona/eliminar/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"persona",
+								"eliminar",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/persona/buscar/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"persona",
+								"buscar",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cliente",
+			"item": [
+				{
+					"name": "Crear Cliente",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"persona\": {\r\n        \"nombre\": \"Jose Lema\",\r\n        \"genero\": \"Masculino\",\r\n        \"fechaNacimiento\": \"1996-04-03\",\r\n        \"identificacion\": \"1234560\",\r\n        \"direccion\": \"Otavalo sn y principal\",\r\n        \"telefono\": \"098254785\"\r\n    },\r\n    \"clave\": \"1234\",\r\n    \"estado\" : true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/cliente/crearCliente",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"cliente",
+								"crearCliente"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/cliente/eliminar/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"cliente",
+								"eliminar",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/cliente/buscar/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"cliente",
+								"buscar",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cuenta",
+			"item": [
+				{
+					"name": "Crear Cuenta",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cliente\":{\r\n        \"idCliente\": 4\r\n    },\r\n    \"numeroCuenta\": \"478758\",\r\n    \"tipoCuenta\": \"Ahorro\",\r\n    \"saldoInicial\": 2000,\r\n    \"estado\" : true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/cuenta/crearCuenta",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"cuenta",
+								"crearCuenta"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/cuenta/eliminar/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"cuenta",
+								"eliminar",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/cuenta/buscar/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"cuenta",
+								"buscar",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Movimientos",
+			"item": [
+				{
+					"name": "Crear Movimiento",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cuenta\":{\r\n        \"idCuenta\": 1\r\n    },\r\n    \"tipoMovimiento\": \"Debito\",\r\n    \"valor\": -575,\r\n    \"estado\" : true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/movimiento/crearMovimiento",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"movimiento",
+								"crearMovimiento"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reporte Movimientos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/movimiento/reporte?idCliente=4&fechaInical=16/03/2023&fechaFinal=16/03/2023",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"movimiento",
+								"reporte"
+							],
+							"query": [
+								{
+									"key": "idCliente",
+									"value": "4"
+								},
+								{
+									"key": "fechaInical",
+									"value": "16/03/2023"
+								},
+								{
+									"key": "fechaFinal",
+									"value": "16/03/2023"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/movimineto/eliminar/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"movimineto",
+								"eliminar",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": "localhost:80",
+			"type": "string"
+		}
+	]
+}

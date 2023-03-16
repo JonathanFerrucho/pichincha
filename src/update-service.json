@@ -1,0 +1,44 @@
+{
+    "cluster": "#{cluster}#",
+    "service": "#{service}#",
+    "taskDefinition": "#{task}#",
+    "loadBalancers": [
+        {
+
+            "targetGroupArn": "#{myTargetGroupArn}#",
+
+            "containerPort": 80,
+
+            "containerName": "#{container}#"
+
+        }
+    ],
+    "serviceRegistries": [],
+    "desiredCount": 1,
+    "capacityProviderStrategy": [],
+    "deploymentConfiguration": {
+        "deploymentCircuitBreaker": {
+            "enable": false,
+            "rollback": false
+        },
+        "maximumPercent": 200,
+        "minimumHealthyPercent": 100
+    },
+    "placementConstraints": [],
+    "placementStrategy": [],
+    "networkConfiguration": {
+        "awsvpcConfiguration": {
+            "subnets": [
+                "#{subnet1}#",
+                "#{subnet2}#"
+            ],
+            "securityGroups": [
+                "#{securityGroup}#"
+            ],
+            "assignPublicIp": "ENABLED"
+        }
+    },
+    "enableECSManagedTags": true,
+    "propagateTags": "TASK_DEFINITION",
+    "enableExecuteCommand": true
+}

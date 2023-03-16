@@ -1,0 +1,16 @@
+{
+    "taskDefinition": "#{task}#",
+    "cluster": "#{cluster}#",
+    "networkConfiguration": {
+        "awsvpcConfiguration": {
+            "subnets": [
+                "#{subnet1}#",
+                "#{subnet2}#"
+            ],
+            "securityGroups": [
+                "#{securityGroup}#"
+            ]
+        }
+    },
+    "launchType": "FARGATE"
+}
