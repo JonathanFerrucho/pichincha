@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import pichincha.cuenta.Cuenta;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Data
@@ -15,7 +16,9 @@ import java.util.Date;
 public class Movimiento {
 
     private Integer idMovimiento;
+    @NotNull(message = "la cuenta es Obligatorio")
     private Cuenta cuenta;
+    @NotNull(message = "el tipo de movimiento es Obligatorio")
     private String tipoMovimiento;
     private Double valor;
     private Double saldo;

@@ -10,6 +10,7 @@ import pichincha.movimiento.Movimiento;
 import pichincha.movimiento.MovimientoReporte;
 import pichincha.movimiento.MovimientoUseCase;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Log
@@ -22,13 +23,13 @@ public class MovimientoService {
 
 
     @PostMapping(path = "crearMovimiento")
-    public ResponseEntity<Movimiento> crearMovimiento(@RequestBody(required = true) Movimiento movimiento) {
+    public ResponseEntity<Movimiento> crearMovimiento(@RequestBody(required = true) @Valid Movimiento movimiento) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(movimientoUseCase.crearMovimiento(movimiento));
     }
 
     @PutMapping(path = "modificarMovimiento")
-    public ResponseEntity<Movimiento> modificarMovimiento(@RequestBody(required = true) Movimiento movimiento) {
+    public ResponseEntity<Movimiento> modificarMovimiento(@RequestBody(required = true) @Valid Movimiento movimiento) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(movimientoUseCase.modificarMovimiento(movimiento));
     }

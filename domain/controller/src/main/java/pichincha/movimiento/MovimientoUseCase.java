@@ -26,7 +26,7 @@ public class MovimientoUseCase {
 
     public Movimiento crearMovimiento(Movimiento movimiento){
 
-        if(movimiento.getCuenta() == null || movimiento.getCuenta().getIdCuenta() == null) {
+        if(movimiento== null || movimiento.getCuenta() == null || movimiento.getCuenta().getIdCuenta() == null) {
             log.log(Level.SEVERE, "El id del la cuenta es obligatorio");
             throw  new IllegalArgumentException("El id del la cuenta es obligatorio");
         }
@@ -53,7 +53,7 @@ public class MovimientoUseCase {
         return movimientoClient.crearMovimiento(movimiento);
     }
 
-    public Movimiento modificarMovimiento(Movimiento movimiento){
+    public Movimiento   modificarMovimiento(Movimiento movimiento){
 
         return movimientoClient.modificarMovimiento(movimiento);
     }

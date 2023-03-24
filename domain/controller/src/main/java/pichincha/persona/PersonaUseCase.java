@@ -12,8 +12,8 @@ public class PersonaUseCase {
 
     public Persona crearPersona(Persona persona){
 
-        if(persona.getNombre() == null || persona.getIdentificacion() == null){
-            throw  new IllegalArgumentException("el nombre y la identificacion de la persona es obligatorio");
+        if(persona== null){
+            throw  new IllegalArgumentException("la persona es obligatoria");
         }
 
         if(Boolean.TRUE.equals(existePersona(persona))) {

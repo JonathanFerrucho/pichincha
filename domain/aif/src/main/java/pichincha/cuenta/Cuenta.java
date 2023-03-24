@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import pichincha.cliente.Cliente;
 
+import javax.validation.constraints.NotNull;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -13,6 +15,7 @@ import pichincha.cliente.Cliente;
 public class Cuenta {
 
     private Integer idCuenta;
+    @NotNull(message = "el cliente es Obligatorio")
     private Cliente cliente;
     private String numeroCuenta;
     private String tipoCuenta;

@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Log
@@ -21,13 +22,13 @@ public class PersonaService {
 
 
     @PostMapping(path = "crear")
-    public ResponseEntity<Persona> crearPersona(@RequestBody(required = true) Persona persona) {
+    public ResponseEntity<Persona> crearPersona(@RequestBody(required = true) @Valid Persona persona) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(personaUseCase.crearPersona(persona));
     }
 
     @PutMapping(path = "modificar")
-    public ResponseEntity<Persona> modificarPersona(@RequestBody(required = true) Persona persona) {
+    public ResponseEntity<Persona> modificarPersona(@RequestBody(required = true) @Valid Persona persona) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(personaUseCase.modificarPersona(persona));
     }

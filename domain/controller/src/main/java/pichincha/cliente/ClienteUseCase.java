@@ -7,7 +7,6 @@ import pichincha.cliente.gateway.ClienteClient;
 import pichincha.persona.PersonaUseCase;
 
 import java.util.List;
-import java.util.logging.Level;
 
 @RequiredArgsConstructor
 @Log
@@ -19,9 +18,8 @@ public class ClienteUseCase {
 
     public Cliente crearCliente(Cliente cliente){
 
-        if(cliente.getPersona() == null || cliente.getPersona().getIdentificacion() == null) {
-            log.log(Level.SEVERE, "el nombre y la identificacion de la persona es obligatorio");
-            throw  new IllegalArgumentException("el nombre y la identificacion de la persona es obligatorio");
+        if(cliente== null) {
+            throw  new IllegalArgumentException("el cliente es obligatoria");
         }
 
         cliente.setPersona(Boolean.TRUE.equals(personaUseCase.existePersona(cliente.getPersona())) ?

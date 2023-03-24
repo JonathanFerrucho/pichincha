@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Component;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -23,8 +24,8 @@ public class PersonaAdapter implements PersonaClient {
     private final PersonaRepository personaRepository;
 
     @Override
-    public Persona crearPersona(Persona persona) {
-        return toPersona(personaRepository.save(toPersonaData(persona)));
+    public Persona crearPersona(@Valid Persona persona) {
+        return toPersona(personaRepository.save( toPersonaData(persona)));
     }
 
     @Override

@@ -20,7 +20,7 @@ public class CuentaUseCase {
 
     public Cuenta crearCuenta(Cuenta cuenta){
 
-        if(cuenta.getCliente() == null || cuenta.getCliente().getIdCliente() == null) {
+        if(cuenta== null || cuenta.getCliente().getIdCliente() == null) {
             log.log(Level.SEVERE, "El id del cliente es obligatorio");
             throw  new IllegalArgumentException("El id del cliente es obligatorio");
         }

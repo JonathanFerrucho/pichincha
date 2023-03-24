@@ -3,9 +3,11 @@ dependencies {
     implementation project(":domain-aif")
     implementation project(":domain-controller")
     implementation project(":adapters-postgres-adapter")
-    implementation project(":security-security")
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+    implementation 'javax.xml.bind:jaxb-api'
+
 
 }

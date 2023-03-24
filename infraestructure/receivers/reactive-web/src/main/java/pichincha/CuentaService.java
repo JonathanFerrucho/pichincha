@@ -6,9 +6,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pichincha.cliente.Cliente;
 import pichincha.cuenta.Cuenta;
 import pichincha.cuenta.CuentaUseCase;
+
+import javax.validation.Valid;
 
 @Log
 @RestController
@@ -20,13 +21,13 @@ public class CuentaService {
 
 
     @PostMapping(path = "crearCuenta")
-    public ResponseEntity<Cuenta> crearCuenta(@RequestBody(required = true) Cuenta cuenta) {
+    public ResponseEntity<Cuenta> crearCuenta(@RequestBody(required = true) @Valid Cuenta cuenta) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(cuentaUseCase.crearCuenta(cuenta));
     }
 
     @PutMapping(path = "modificarCuenta")
-    public ResponseEntity<Cuenta> modificarCuenta(@RequestBody(required = true) Cuenta cuenta) {
+    public ResponseEntity<Cuenta> modificarCuenta(@RequestBody(required = true) @Valid Cuenta cuenta) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(cuentaUseCase.crearCuenta(cuenta));
     }

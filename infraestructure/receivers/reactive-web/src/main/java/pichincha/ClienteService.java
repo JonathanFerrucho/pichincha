@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @Log
 @RestController
 @RequiredArgsConstructor
@@ -19,14 +21,14 @@ public class ClienteService {
 
 
     @PostMapping(path = "crearCliente")
-    public ResponseEntity<Cliente> crearCliente(@RequestBody(required = true) Cliente cliente) {
+    public ResponseEntity<Cliente> crearCliente(@RequestBody(required = true) @Valid Cliente cliente) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(clienteUseCase.crearCliente(cliente));
     }
 
 
     @PutMapping(path = "modificarCliente")
-    public ResponseEntity<Cliente> modificarCliente(@RequestBody(required = true) Cliente cliente) {
+    public ResponseEntity<Cliente> modificarCliente(@RequestBody(required = true) @Valid Cliente cliente) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(clienteUseCase.crearCliente(cliente));
     }
