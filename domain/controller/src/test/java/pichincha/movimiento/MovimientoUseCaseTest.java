@@ -14,6 +14,8 @@ import pichincha.cuenta.CuentaUseCase;
 import pichincha.movimiento.gateway.MovimientoClient;
 import pichincha.movimiento.gateway.MovimientoReportesClient;
 import pichincha.persona.Persona;
+import pichincha.transaccion.Common;
+import pichincha.transaccion.RespuestaEnum;
 
 import java.util.Date;
 import java.util.List;
@@ -38,7 +40,7 @@ public class MovimientoUseCaseTest {
 
     Cliente clienteRest;
     Persona personaRest;
-    Cuenta cuentaRest;
+    Common<Cuenta> cuentaRest;
     Movimiento movimiento;
     Movimiento movimientoRest;
     MovimientoReporte movimientoReporte;
@@ -65,15 +67,17 @@ public class MovimientoUseCaseTest {
                 .clave(TEST)
                 .build();
 
-        cuentaRest = Cuenta.builder()
-                .idCuenta(1)
-                .cliente(clienteRest)
-                .estado(Boolean.TRUE)
-                .saldoInicial(100D)
+        cuentaRest = Common.<pichincha.cuenta.Cuenta>builder()
+                .data(Cuenta.builder()
+                        .idCuenta(1)
+                        .cliente(clienteRest)
+                        .estado(Boolean.TRUE)
+                        .saldoInicial(100D)
+                        .build())
                 .build();
 
         movimiento= Movimiento.builder()
-                .cuenta(cuentaRest)
+                .cuenta(cuentaRest.getData())
                 .saldo(100D)
                 .tipoMovimiento("Debito")
                 .valor(-50D)
@@ -81,7 +85,7 @@ public class MovimientoUseCaseTest {
 
         movimientoRest = Movimiento.builder()
                 .idMovimiento(1)
-                .cuenta(cuentaRest)
+                .cuenta(cuentaRest.getData())
                 .saldo(100D)
                 .build();
 
@@ -100,9 +104,9 @@ public class MovimientoUseCaseTest {
                 .thenReturn(movimientoRest);
 
 
-        movimiento = movimientoUseCase.crearMovimiento(movimiento);
+        Common<Movimiento> movimientoCommon = movimientoUseCase.crearMovimiento(movimiento);
 
-        assertThat(movimiento.getIdMovimiento()).isEqualTo(1);
+        assertThat(movimientoCommon.getData().getIdMovimiento()).isEqualTo(1);
     }
 
     @Test
@@ -150,9 +154,9 @@ public class MovimientoUseCaseTest {
     public void getMovimiento() {
         when(movimientoClient.getMovimiento(any(Movimiento.class))).thenReturn(List.of(movimientoRest));
 
-        List<Movimiento> movimientos = movimientoUseCase.getMovimiento(movimiento);
+        Common<List<Movimiento>> movimientosCommon = movimientoUseCase.getMovimiento(movimiento);
 
-        assertThat(movimientos).isNotEmpty();
+        assertThat(movimientosCommon.getData()).isNotEmpty();
     }
 
     @Test
@@ -160,9 +164,9 @@ public class MovimientoUseCaseTest {
         when(movimientoReportesClient.reportePorClienteYFechas(anyInt(), any(Date.class), any(Date.class)))
                 .thenReturn(List.of(movimientoReporte));
 
-        List<MovimientoReporte> movimientos = movimientoUseCase.reportePorClienteYFechas(1, "16/03/2023", "16/03/2023");
+        Common<List<MovimientoReporte>>  movimientosCommon = movimientoUseCase.reportePorClienteYFechas(1, "16/03/2023", "16/03/2023");
 
-        assertThat(movimientos).isNotEmpty();
+        assertThat(movimientosCommon.getData()).isNotEmpty();
     }
 
     @Test

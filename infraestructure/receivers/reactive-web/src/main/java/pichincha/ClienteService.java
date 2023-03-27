@@ -8,6 +8,7 @@ import lombok.extern.java.Log;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pichincha.transaccion.Common;
 
 import javax.validation.Valid;
 
@@ -20,28 +21,28 @@ public class ClienteService {
     private final ClienteUseCase clienteUseCase;
 
 
-    @PostMapping(path = "crearCliente")
-    public ResponseEntity<Cliente> crearCliente(@RequestBody(required = true) @Valid Cliente cliente) {
+    @PostMapping()
+    public ResponseEntity<Common<Cliente>> crearCliente(@RequestBody(required = true) @Valid Cliente cliente) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(clienteUseCase.crearCliente(cliente));
     }
 
 
-    @PutMapping(path = "modificarCliente")
-    public ResponseEntity<Cliente> modificarCliente(@RequestBody(required = true) @Valid Cliente cliente) {
+    @PutMapping()
+    public ResponseEntity<Common<Cliente>> modificarCliente(@RequestBody(required = true) @Valid Cliente cliente) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(clienteUseCase.crearCliente(cliente));
     }
 
-    @DeleteMapping(path = "eliminar/{id}")
+    @DeleteMapping(path = "{id}")
     public ResponseEntity<String> eliminarCliente(@PathVariable Integer id) {
         clienteUseCase.eliminarCliente(id);
         return ResponseEntity.status(HttpStatus.OK)
                 .body("Cliente eliminada Satisfactoriamente");
     }
 
-    @GetMapping(path = "buscar/{id}")
-    public ResponseEntity<Cliente> buscarCliente(@PathVariable Integer id) {
+    @GetMapping(path = "{id}")
+    public ResponseEntity<Common<Cliente>> buscarCliente(@PathVariable Integer id) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body( clienteUseCase.buscarPorId(id));
     }

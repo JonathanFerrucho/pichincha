@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 import pichincha.cliente.gateway.ClienteClient;
 import pichincha.persona.PersonaUseCase;
+import pichincha.transaccion.Common;
+import pichincha.transaccion.RespuestaEnum;
 
 import java.util.List;
 
@@ -16,21 +18,27 @@ public class ClienteUseCase {
     private final PersonaUseCase personaUseCase;
 
 
-    public Cliente crearCliente(Cliente cliente){
-
+    public Common<Cliente> crearCliente(Cliente cliente){
         if(cliente== null) {
-            throw  new IllegalArgumentException("el cliente es obligatoria");
+            return  Common.<Cliente>builder()
+                    .exito(Boolean.FALSE)
+                    .mensaje("el cliente es obligatoria")
+                    .build();
         }
 
         cliente.setPersona(Boolean.TRUE.equals(personaUseCase.existePersona(cliente.getPersona())) ?
                 personaUseCase.buscarPersonaPoridentificacion(cliente.getPersona().getIdentificacion()) :
-                personaUseCase.crearPersona(cliente.getPersona()));
+                personaUseCase.crearPersona(cliente.getPersona()).getData());
 
         if(cliente.getEstado() == null){
             cliente.setEstado(Boolean.TRUE);
         }
 
-        return clienteClient.crearCliene(cliente);
+        return Common.<Cliente>builder()
+                .exito(Boolean.TRUE)
+                .mensaje(RespuestaEnum.EXITO.message)
+                .data(clienteClient.crearCliente(cliente))
+                .build();
     }
 
     public void eliminarCliente(Integer id){
@@ -40,15 +48,19 @@ public class ClienteUseCase {
 
     public Cliente modificarCliente(Cliente cliente){
 
-        return clienteClient.crearCliene(cliente);
+        return clienteClient.crearCliente(cliente);
     }
 
     public List<Cliente> getCliente(Cliente cliente){
         return clienteClient.getCliente(cliente);
     }
 
-    public Cliente buscarPorId(Integer id){
-        return clienteClient.buscarPorId(id);
+    public Common<Cliente> buscarPorId(Integer id){
+        return Common.<Cliente>builder()
+                .exito(Boolean.TRUE)
+                .mensaje(RespuestaEnum.EXITO.message)
+                .data(clienteClient.buscarPorId(id))
+                .build();
     }
 
 }

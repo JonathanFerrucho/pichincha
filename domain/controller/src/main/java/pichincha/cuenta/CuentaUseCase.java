@@ -6,6 +6,8 @@ import lombok.extern.java.Log;
 import pichincha.cliente.Cliente;
 import pichincha.cliente.ClienteUseCase;
 import pichincha.cuenta.gateway.CuentaClient;
+import pichincha.transaccion.Common;
+import pichincha.transaccion.RespuestaEnum;
 
 import java.util.List;
 import java.util.logging.Level;
@@ -18,25 +20,36 @@ public class CuentaUseCase {
     private final ClienteUseCase clienteUseCase;
 
 
-    public Cuenta crearCuenta(Cuenta cuenta){
+    public Common<Cuenta> crearCuenta(Cuenta cuenta){
 
         if(cuenta== null || cuenta.getCliente().getIdCliente() == null) {
             log.log(Level.SEVERE, "El id del cliente es obligatorio");
-            throw  new IllegalArgumentException("El id del cliente es obligatorio");
+
+            return Common.<Cuenta>builder()
+                    .exito(Boolean.FALSE)
+                    .mensaje("El id del cliente es obligatorio")
+                    .build();
         }
 
-        Cliente cliente= clienteUseCase.buscarPorId(cuenta.getCliente().getIdCliente());
+        Common<Cliente> clienteCommon= clienteUseCase.buscarPorId(cuenta.getCliente().getIdCliente());
 
-        if(cliente == null || cliente.getIdCliente() == null) {
+        if(clienteCommon == null || clienteCommon.getData() == null || clienteCommon.getData().getIdCliente() == null) {
             log.log(Level.SEVERE, "El  cliente suministrado  no existe");
-            throw  new IllegalArgumentException("El  cliente suministrado  no existe");
+            return Common.<Cuenta>builder()
+                    .exito(Boolean.FALSE)
+                    .mensaje("El  cliente suministrado  no existe")
+                    .build();
         }
 
         if(cuenta.getEstado() == null){
             cuenta.setEstado(Boolean.TRUE);
         }
 
-        return cuentaClient.crearCuenta(cuenta);
+        return Common.<Cuenta>builder()
+                .exito(Boolean.TRUE)
+                .mensaje(RespuestaEnum.EXITO.message)
+                .data(cuentaClient.crearCuenta(cuenta))
+                .build();
     }
 
     public Cuenta ModificarCuenta(Cuenta cuenta){
@@ -52,8 +65,12 @@ public class CuentaUseCase {
         return cuentaClient.getCuenta(cuenta);
     }
 
-    public Cuenta buscarPorId(Integer id){
-        return cuentaClient.buscarPorId(id);
+    public Common<Cuenta> buscarPorId(Integer id){
+        return Common.<pichincha.cuenta.Cuenta>builder()
+                .exito(Boolean.TRUE)
+                .mensaje(RespuestaEnum.EXITO.message)
+                .data(cuentaClient.buscarPorId(id))
+                .build();
     }
 
 }

@@ -10,6 +10,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import pichincha.cliente.gateway.ClienteClient;
 import pichincha.persona.Persona;
 import pichincha.persona.PersonaUseCase;
+import pichincha.transaccion.Common;
 
 import java.util.Date;
 import java.util.List;
@@ -23,7 +24,7 @@ public class ClienteUseCaseTest {
 
     Cliente cliente;
     Cliente clienteRest;
-    Persona personaRest;
+    Common<Persona> personaRest;
 
     private static final String TEST = "TEST";
     private static final Date TEST_DATE = new Date();
@@ -42,10 +43,12 @@ public class ClienteUseCaseTest {
 
         clienteUseCase= new ClienteUseCase(clienteClient, personaUseCase);
 
-        personaRest= Persona.builder()
+        personaRest= Common.<Persona>builder()
+                .data(Persona.builder()
                         .idPersona(1)
                         .identificacion(TEST)
-                        .build();
+                        .build())
+                .build();
 
         cliente = Cliente.builder()
                 .persona(Persona.builder()
@@ -65,14 +68,14 @@ public class ClienteUseCaseTest {
 
     @Test
     public void crearCliente() {
-        when(clienteClient.crearCliene(any(Cliente.class))).thenReturn(clienteRest);
+        when(clienteClient.crearCliente(any(Cliente.class))).thenReturn(clienteRest);
         when(personaUseCase.existePersona(any(Persona.class))).thenReturn(Boolean.TRUE);
-        when(personaUseCase.buscarPersonaPoridentificacion(anyString())).thenReturn(personaRest);
+        when(personaUseCase.buscarPersonaPoridentificacion(anyString())).thenReturn(personaRest.getData());
 
-        cliente = clienteUseCase.crearCliente(cliente);
+        Common<Cliente>  clienteCommon= clienteUseCase.crearCliente(cliente);
 
-        assertThat(cliente.getIdCliente()).isEqualTo(1);
-        assertThat(cliente.getEstado()).isEqualTo(Boolean.TRUE);
+        assertThat(clienteCommon.getData().getIdCliente()).isEqualTo(1);
+        assertThat(clienteCommon.getData().getEstado()).isEqualTo(Boolean.TRUE);
     }
 
     @Test
@@ -88,13 +91,13 @@ public class ClienteUseCaseTest {
 
     @Test
     public void crearClientePersonaNueva() {
-        when(clienteClient.crearCliene(any(Cliente.class))).thenReturn(clienteRest);
+        when(clienteClient.crearCliente(any(Cliente.class))).thenReturn(clienteRest);
         when(personaUseCase.crearPersona(any(Persona.class))).thenReturn(personaRest);
 
-        cliente = clienteUseCase.crearCliente(cliente);
+        Common<Cliente>  clienteCommon = clienteUseCase.crearCliente(cliente);
 
-        assertThat(cliente.getIdCliente()).isEqualTo(1);
-        assertThat(cliente.getEstado()).isEqualTo(Boolean.TRUE);
+        assertThat(clienteCommon.getData().getIdCliente()).isEqualTo(1);
+        assertThat(clienteCommon.getData().getEstado()).isEqualTo(Boolean.TRUE);
     }
 
     @Test
@@ -117,9 +120,9 @@ public class ClienteUseCaseTest {
     public void buscarPorId() {
         when(clienteClient.buscarPorId(anyInt())).thenReturn(clienteRest);
 
-        cliente = clienteUseCase.buscarPorId(1);
+        Common<Cliente> clienteCommon = clienteUseCase.buscarPorId(1);
 
-        assertThat(cliente.getIdCliente()).isEqualTo(1);
-        assertThat(cliente.getEstado()).isEqualTo(Boolean.TRUE);
+        assertThat(clienteCommon.getData().getIdCliente()).isEqualTo(1);
+        assertThat(clienteCommon.getData().getEstado()).isEqualTo(Boolean.TRUE);
     }
 }

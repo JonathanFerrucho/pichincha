@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import pichincha.movimiento.Movimiento;
 import pichincha.movimiento.MovimientoReporte;
 import pichincha.movimiento.MovimientoUseCase;
+import pichincha.transaccion.Common;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -16,25 +17,25 @@ import java.util.List;
 @Log
 @RestController
 @RequiredArgsConstructor
-    @RequestMapping(value = "movimiento", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "movimiento", produces = MediaType.APPLICATION_JSON_VALUE)
 public class MovimientoService {
 
     private final MovimientoUseCase movimientoUseCase;
 
 
-    @PostMapping(path = "crearMovimiento")
-    public ResponseEntity<Movimiento> crearMovimiento(@RequestBody(required = true) @Valid Movimiento movimiento) {
+    @PostMapping()
+    public ResponseEntity<Common<Movimiento>> crearMovimiento(@RequestBody(required = true) @Valid Movimiento movimiento) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(movimientoUseCase.crearMovimiento(movimiento));
     }
 
-    @PutMapping(path = "modificarMovimiento")
-    public ResponseEntity<Movimiento> modificarMovimiento(@RequestBody(required = true) @Valid Movimiento movimiento) {
+    @PutMapping()
+    public ResponseEntity<Common<Movimiento>> modificarMovimiento(@RequestBody(required = true) @Valid Movimiento movimiento) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(movimientoUseCase.modificarMovimiento(movimiento));
     }
 
-    @DeleteMapping(path = "eliminar/{id}")
+    @DeleteMapping(path = "{id}")
     public ResponseEntity<String> eliminarMovimiento(@PathVariable Integer id) {
         movimientoUseCase.eliminarMovimiento(id);
         return ResponseEntity.status(HttpStatus.OK)
@@ -42,7 +43,7 @@ public class MovimientoService {
     }
 
     @GetMapping(path = "reporte")
-    public ResponseEntity<List<MovimientoReporte>> reportePorClienteYFechas(@RequestParam Integer idCliente, @RequestParam String fechaInical, @RequestParam String fechaFinal) {
+    public ResponseEntity<Common<List<MovimientoReporte>>> reportePorClienteYFechas(@RequestParam Integer idCliente, @RequestParam String fechaInical, @RequestParam String fechaFinal) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(movimientoUseCase.reportePorClienteYFechas(idCliente, fechaInical, fechaFinal));
     }

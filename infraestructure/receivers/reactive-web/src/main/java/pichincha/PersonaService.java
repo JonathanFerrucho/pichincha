@@ -8,6 +8,7 @@ import lombok.extern.java.Log;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pichincha.transaccion.Common;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -21,26 +22,26 @@ public class PersonaService {
     private final PersonaUseCase personaUseCase;
 
 
-    @PostMapping(path = "crear")
-    public ResponseEntity<Persona> crearPersona(@RequestBody(required = true) @Valid Persona persona) {
+    @PostMapping()
+    public ResponseEntity<Common<Persona>> crearPersona(@RequestBody(required = true) @Valid Persona persona) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(personaUseCase.crearPersona(persona));
     }
 
-    @PutMapping(path = "modificar")
+    @PutMapping()
     public ResponseEntity<Persona> modificarPersona(@RequestBody(required = true) @Valid Persona persona) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(personaUseCase.modificarPersona(persona));
     }
 
-    @DeleteMapping(path = "eliminar/{id}")
+    @DeleteMapping(path = "{id}")
     public ResponseEntity<String> eliminarPersona(@PathVariable Integer id) {
         personaUseCase.eliminarPersona(id);
         return ResponseEntity.status(HttpStatus.OK)
                 .body("Persona eliminada Satisfactoriamente");
     }
 
-    @GetMapping(path = "buscar/{id}")
+    @GetMapping(path = "{id}")
     public ResponseEntity<Persona> buscarPersona(@PathVariable Integer id) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body( personaUseCase.buscarPersonaPorId(id));

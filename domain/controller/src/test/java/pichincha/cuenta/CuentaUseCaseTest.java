@@ -11,6 +11,7 @@ import pichincha.cliente.Cliente;
 import pichincha.cliente.ClienteUseCase;
 import pichincha.cuenta.gateway.CuentaClient;
 import pichincha.persona.Persona;
+import pichincha.transaccion.Common;
 
 import java.util.Date;
 import java.util.List;
@@ -24,7 +25,7 @@ import static org.mockito.Mockito.when;
 public class CuentaUseCaseTest {
 
     Cliente cliente;
-    Cliente clienteRest;
+    Common<Cliente> clienteRest;
     Persona personaRest;
     Cuenta cuenta;
     Cuenta cuentaRest;
@@ -60,19 +61,21 @@ public class CuentaUseCaseTest {
                 .clave(TEST)
                 .build();
 
-        clienteRest= Cliente.builder()
-                .idCliente(1)
-                .persona(Persona.builder().build())
-                .estado(Boolean.TRUE)
-                .clave(TEST)
+        clienteRest= Common.<Cliente>builder()
+                .data(Cliente.builder()
+                        .idCliente(1)
+                        .persona(Persona.builder().build())
+                        .estado(Boolean.TRUE)
+                        .clave(TEST)
+                        .build())
                 .build();
 
         cuenta = Cuenta.builder()
-                    .cliente(clienteRest)
+                    .cliente(clienteRest.getData())
                     .build();
         cuentaRest = Cuenta.builder()
                 .idCuenta(1)
-                .cliente(clienteRest)
+                .cliente(clienteRest.getData())
                 .estado(Boolean.TRUE)
                 .build();
 
@@ -84,10 +87,10 @@ public class CuentaUseCaseTest {
         when(cuentaClient.crearCuenta(any(Cuenta.class))).thenReturn(cuentaRest);
 
 
-        cuenta = cuentaUseCase.crearCuenta(cuenta);
+        Common<Cuenta> cuentaCommon = cuentaUseCase.crearCuenta(cuenta);
 
-        assertThat(cuenta.getIdCuenta()).isEqualTo(1);
-        assertThat(cuenta.getEstado()).isEqualTo(Boolean.TRUE);
+        assertThat(cuentaCommon.getData().getIdCuenta()).isEqualTo(1);
+        assertThat(cuentaCommon.getData().getEstado()).isEqualTo(Boolean.TRUE);
     }
 
     @Test
@@ -122,18 +125,18 @@ public class CuentaUseCaseTest {
     public void getCuenta() {
         when(cuentaClient.getCuenta(any(Cuenta.class))).thenReturn(List.of(cuentaRest));
 
-        List<Cuenta> clientes = cuentaUseCase.getCuenta(cuenta);
+        List<Cuenta> cuentas = cuentaUseCase.getCuenta(cuenta);
 
-        assertThat(clientes).isNotEmpty();
+        assertThat(cuentas).isNotEmpty();
     }
 
     @Test
     public void buscarPorId() {
         when(cuentaClient.buscarPorId(anyInt())).thenReturn(cuentaRest);
 
-        cuenta = cuentaUseCase.buscarPorId(1);
+        Common<Cuenta> cuenta = cuentaUseCase.buscarPorId(1);
 
-        assertThat(cuenta.getIdCuenta()).isEqualTo(1);
-        assertThat(cuenta.getEstado()).isEqualTo(Boolean.TRUE);
+        assertThat(cuenta.getData().getIdCuenta()).isEqualTo(1);
+        assertThat(cuenta.getData().getEstado()).isEqualTo(Boolean.TRUE);
     }
 }

@@ -2,6 +2,8 @@ package pichincha.persona;
 
 import pichincha.persona.gateway.PersonaClient;
 import lombok.RequiredArgsConstructor;
+import pichincha.transaccion.Common;
+import pichincha.transaccion.RespuestaEnum;
 
 import java.util.List;
 
@@ -10,16 +12,26 @@ public class PersonaUseCase {
 
     private final PersonaClient personaClient;
 
-    public Persona crearPersona(Persona persona){
+    public Common<Persona> crearPersona(Persona persona){
 
         if(persona== null){
-            throw  new IllegalArgumentException("la persona es obligatoria");
+            return Common.<Persona>builder()
+                    .exito(Boolean.FALSE)
+                    .mensaje("la persona es obligatoria")
+                    .build();
         }
 
         if(Boolean.TRUE.equals(existePersona(persona))) {
-            throw  new IllegalArgumentException("La persona ya existe con esa identificacion");
+            return Common.<Persona>builder()
+                    .exito(Boolean.FALSE)
+                    .mensaje("La persona ya existe con esa identificacion")
+                    .build();
         }
-        return personaClient.crearPersona(persona);
+        return Common.<Persona>builder()
+                .exito(Boolean.TRUE)
+                .mensaje(RespuestaEnum.EXITO.message)
+                .data(personaClient.crearPersona(persona))
+                .build();
     }
 
     public Persona modificarPersona(Persona persona){
